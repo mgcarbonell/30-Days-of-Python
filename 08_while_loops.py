@@ -128,5 +128,3 @@ for x in range(2, 101):
         primes.append(x)
 
 print(primes)
-
-# You can find our solutions to the exercises here.

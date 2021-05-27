@@ -42,7 +42,8 @@ card_number = list(input("Please enter a number to validate: ").strip())
 check_digit = card_number.pop()
 # reverse the remaining digits
 card_number.reverse()
-# double digits at even dicies
+
+# double digits at even indicies
 
 processed_digits = []
 

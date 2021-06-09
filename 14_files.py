@@ -157,9 +157,19 @@ for row in iris_data[1:]:
 #  f.close()
 # Use append mode to write "How are you?" on the second line of the hello_world.txt file above.
 with open('hello_world.txt', 'w') as hello_world:
-    hello_world.write("Hello, World!")
+    hello_world.write("\nHello, World!")
 
 # Take the list of dictionaries we created from the Iris flower data set and write it to a new file in CSV format.
+
+# for iris in irises:
+#     print (
+#         f"{iris['sepal_length']}, {iris['sepal_width']}, {iris['petal_length']}," +
+#         f"{iris['petal_width']},{iris['species']}"
+#     )
+
+with open('iris_2.csv', 'w') as iris_file:
+    for iris in irises:
+        iris_file.write(','.join(iris.values()) + '\n')
 
 # Project
 # Today is the end of the second week, so that means another end of week project!

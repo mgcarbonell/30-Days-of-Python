@@ -115,7 +115,7 @@ numbers = [1, 2, 3, 4, 5]
 numbers = [num ** 2 for num in numbers]
 print(numbers)
 
-# ) Use a dictionary comprehension to create a new dictionary from the dictionary below, where each of the values is title case.
+# 2) Use a dictionary comprehension to create a new dictionary from the dictionary below, where each of the values is title case.
 
 movie = {
     "title": "thor: ragnarok",
@@ -128,3 +128,4 @@ movie = {
     meta: info.title() for meta, info in movie.items()
 }
 print(movie)
+

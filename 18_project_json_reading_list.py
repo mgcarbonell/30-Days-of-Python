@@ -1,10 +1,28 @@
-def add_book():
-    title = input("Title: ").strip().title()
-    author = input("Author: ").strip().title()
-    year = input("Year of publication: ").strip()
+import json
 
-    with open("books.csv", "a") as reading_list:
-        reading_list.write(f"{title},{author},{year},Not Read\n")
+def create_book_file():
+	try:
+		with open("books.json", "x") as reading_list:
+			json.dump([], reading_list)
+	except FileExistsError:
+		pass
+
+def add_book():
+    books = get_all_books()
+
+    title = input('Title: ').strip().title()
+    author = input('Author: ').strip().title()
+    year = input('Year of publication: ').strip()
+
+    books.append({
+      "title": title,
+      "author": author,
+      "year": year,
+      "read": "Not Read"
+    })
+
+    with open('books.json', 'w') as reading_list:
+      json.dump(books, reading_list)
 
 def delete_book(books, book_to_delete):
     books.remove(book_to_delete)
@@ -23,22 +41,8 @@ def find_books():
 
 # Helper function for retrieving data from the csv file
 def get_all_books():
-    books = []
-
-    with open("books.csv", "r") as reading_list:
-        for book in reading_list:
-            # Extracts the values from the CSV data
-            title, author, year, read_status = book.strip().split(",")
-
-            # Creates a dictionary from the csv data and adds it to the books list
-            books.append({
-                "title": title,
-                "author": author,
-                "year": year,
-                "read": read_status
-            })
-
-    return books
+    with open('books.json', 'r') as reading_list:
+      return json.load(reading_list)
 
 def mark_book_as_read(books, book_to_update):
     index = books.index(book_to_update)
@@ -51,9 +55,8 @@ def update_reading_list(operation):
     if matching_books:
         operation(books, matching_books[0])
 
-        with open("books.csv", "w") as reading_list:
-            for book in books:
-                reading_list.write(f"{book['title']},{book['author']},{book['year']},{book['read']}\n")
+        with open('books.json', 'w') as reading_list:
+            json.dump(books, reading_list)
     else:
         print("Sorry, we didn't find any books matching that title.")
 
@@ -62,9 +65,12 @@ def show_books(books):
     print()
 
     for book in books:
-        print(f"{book['title']}, by {book['author']} ({book['year']}) - {book['read']}")
+        print('{title}, by {author} ({year} - {read})'.format(**book))
 
     print()
+
+# call our json check and start up check functions
+create_book_file()
 
 menu_prompt = """Please enter one of the following options:
 
